@@ -27,6 +27,7 @@ var app = {
       document.addEventListener('deviceready', this.onDeviceReady, false);
       app.dondeEstoy();
     },
+    
     dondeEstoy: function(punto){
       app.estoyID = navigator.geolocation.watchPosition(onSuccess, app.onError, { enableHighAccuracy: true });
       function onSuccess(position) {
