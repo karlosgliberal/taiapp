@@ -4,4 +4,6 @@ platforms/
 plugins/
 merges/
 node_modules/
+node_modules/*
+node/node_mdules/* 
 .cordova/
