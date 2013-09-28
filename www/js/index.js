@@ -29,9 +29,8 @@ var app = {
 
    onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        app.dondeEstoy();
-        alert('device');
         $('#rojo').click(function(){
+          app.dondeEstoy();
           alert('rojo');
         });
     },
