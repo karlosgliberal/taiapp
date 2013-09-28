@@ -25,14 +25,22 @@ var app = {
 
     bindEvents: function() {
       document.addEventListener('deviceready', this.onDeviceReady, false);
-      app.dondeEstoy();
+    },
+
+   onDeviceReady: function() {
+        app.receivedEvent('deviceready');
+        app.dondeEstoy();
+        alert('device');
+        $('#rojo').click(function(){
+          alert('rojo');
+        });
     },
 
     dondeEstoy: function(punto){
       app.estoyID = navigator.geolocation.watchPosition(onSuccess, app.onError, { enableHighAccuracy: true });
       function onSuccess(position) {
+        app.enviarServidor(position);
         if(position.coords.accuracy < 50){
-          app.enviarServidor(position);
           navigator.geolocation.clearWatch(app.estoyID);
         }
       };
@@ -48,16 +56,14 @@ var app = {
           dataType: 'jsonp',
           data: "lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&total="+total+"&color="+colr,
           jsonp: 'callback',
-          url: 'http://192.168.1.61:7000/logget?callback=?',                     
+          url: 'http://192.168.1.61:4000/logget?callback=?',                     
           success: function(data) {
             console.log(data.more);
           }
       });
     }, 
 
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
+
 
     //TODO quitar mas adelante
     receivedEvent: function(id) {
