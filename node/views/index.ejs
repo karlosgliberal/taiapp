@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+  <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
+  <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+  <!--[if lte IE 8]>
+    <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
+  <![endif]-->
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+</head>
+<body>
+<div id='map'></div>
+<script>
+
+var dataRef = new Firebase("https://taiapp.firebaseio.com/datos");
+dataRef.on('value', function(snapshot) {
+    var map = L.mapbox.map('map', 'examples.map-uci7ul8p')
+    .setView([42.8090541, -1.5936428], 16);
+      var marker = [];
+      var datos = snapshot.val();
+      for (var i = datos.length - 1; i >= 0; i--) {
+        console.log(datos[i][0]);
+        marker[i] = L.marker(new L.LatLng(datos[i][0], datos[i][1]), {
+                        icon: L.mapbox.marker.icon({'marker-color': '000000'}),
+                        draggable: true
+                    });
+        marker[i].bindPopup('numero '+ i);
+        marker[i].addTo(map);
+      };
+});
+</script>
+</body>
+</html>
