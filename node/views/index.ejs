@@ -19,8 +19,8 @@
 
 var dataRef = new Firebase("https://taiapp.firebaseio.com/datos");
 dataRef.on('value', function(snapshot) {
-    var map = L.mapbox.map('map', 'examples.map-uci7ul8p')
-    .setView([42.8090541, -1.5936428], 16);
+    var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
+    .setView([43.2694155, -2.9613963], 16);
       var marker = [];
       var datos = snapshot.val();
       for (var i = datos.length - 1; i >= 0; i--) {

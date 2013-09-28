@@ -20,7 +20,7 @@ var app = {
     estoyID: null,
 
     initialize: function() {
-        this.bindEvents();
+      this.bindEvents();
     },
 
     bindEvents: function() {
@@ -28,17 +28,22 @@ var app = {
     },
 
     onDeviceReady: function() {
-      alert('alert'); 
       app.receivedEvent('deviceready');
       $('#rojo').click(function(){
-        app.dondeEstoy();
+        app.dondeEstoy('rojo');
+      });
+      $('#naranja').click(function(){
+        app.dondeEstoy('naranja');
+      });
+      $('#amarillo').click(function(){
+        app.dondeEstoy('amarillo');
       });
     },
 
-    dondeEstoy: function(punto){
+    dondeEstoy: function(color){
       app.estoyID = navigator.geolocation.watchPosition(onSuccess, app.onError, { enableHighAccuracy: true });
       function onSuccess(position) {
-        app.enviarServidor(position);
+        app.enviarServidor(position, color);
         if(position.coords.accuracy < 50){
           navigator.geolocation.clearWatch(app.estoyID);
         }
@@ -49,15 +54,18 @@ var app = {
       alert('error');
     },
 
-    enviarServidor: function(position){
-      var color = 'rojo';                      
+    enviarServidor: function(position, color){
+      var colorID = color;                      
       $.ajax({
           dataType: 'jsonp',
-          data: "lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&color="+color,
+          data: "lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&color="+colorID,
           jsonp: 'callback',
           url: 'http://192.168.1.61:4000/logget?callback=?',                     
           success: function(data) {
             console.log(data.more);
+          }, 
+          error: function(err){
+            alert(error);  
           }
       });
     }, 

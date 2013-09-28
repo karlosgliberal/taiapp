@@ -26,13 +26,13 @@ app.get('/', function(req, res){
 })
 
 app.get('/logget', function(req, res){
+  console.log('llega');
   dataRef.auth(token, function(error) {
     if(error) {
       console.log("Login Failed!", error);
     } else {
-      var childRef = dataRef.child(req.param('color'));
+      var childRef = dataRef.child('datos');
       childRef.push({color:req.param('color'), lat:req.param('lat'), lon:req.param('lon')})
-      //childRef.set(JSON.parse(req.param('somedata')));
     }
   });
   res.header('Content-Type', 'application/json');
