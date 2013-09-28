@@ -26,7 +26,6 @@ app.get('/', function(req, res){
 })
 
 app.get('/logget', function(req, res){
-  console.log('llega');
   dataRef.auth(token, function(error) {
     if(error) {
       console.log("Login Failed!", error);

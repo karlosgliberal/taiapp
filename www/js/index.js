@@ -30,13 +30,13 @@ var app = {
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
       $('#rojo').click(function(){
-        app.dondeEstoy('rojo');
+        app.dondeEstoy('FF0000');
       });
       $('#naranja').click(function(){
-        app.dondeEstoy('naranja');
+        app.dondeEstoy('FF7D0D');
       });
       $('#amarillo').click(function(){
-        app.dondeEstoy('amarillo');
+        app.dondeEstoy('FFAB0D');
       });
     },
 
