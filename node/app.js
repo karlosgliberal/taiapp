@@ -1,35 +1,65 @@
 
-/**
- * Module dependencies.
- */
-
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'),
+    path = require('path');
+var Firebase = require('firebase');
+var FirebaseTokenGenerator = require("firebase-token-generator");
+var tokenGenerator = new FirebaseTokenGenerator('fRVy2CxoB5J7iMCNioKDIZZD5DdBkc0ryhDyqkMT');
+var token = tokenGenerator.createToken({admin: true});
+var dataRef = new Firebase("https://taiapp.firebaseio.com/");
 
 var app = express();
-
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 7000);
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
+  app.use(express.favicon(__dirname + '/public/favicon.ico')); 
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
+app.get('/', function(req, res){
+  dataRef.auth(token, function(error) {
+    if(error) {
+      console.log("Login Failed!", error);
+    } else {
+      var childRef = dataRef.child('users');
+      //childRef.set(JSON.parse(req.param('somedata')));
+      console.log("Login Succeeded!");
+      console.log(req.param('somedata'));
+    }
+  });
+  res.render('index', {
+    title: "EJS example",
+    header: "Some users"
+  });
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+app.get('/logget', function(req, res){
+  dataRef.auth(token, function(error) {
+    if(error) {
+      console.log("Login Failed!", error);
+    } else {
+      var childRef = dataRef.child(req.param('nombre'));
+      childRef.push({color:req.param('color'), lat:req.param('lat'), lon:req.param('lon')})
+      //childRef.set(JSON.parse(req.param('somedata')));
+      console.log(req.param('total'));
+    }
+  });
+  res.header('Content-Type', 'application/json');
+  res.header('Charset', 'utf-8')
+  res.send(req.query.callback + '({"something": "rather", "more": "pork", "tua": "tara"});');
 });
+
+
+app.get('/', function(req, res){
+  res.render('index', { title: 'Express' });
+})
+
+
+app.listen(7000);
+console.log('Listening on port 7000');
+

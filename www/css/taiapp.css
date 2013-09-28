@@ -1,25 +1,23 @@
 
 .bt1, .bt2, .bt3, .texto-area {
-	display: block;
 	margin: 0 auto;
 }
 
 .bt1 {
-background-color: red;
+	background-color: red;
 }
-
 
 .bt2 {
 	background-color: #FF530D;
 }
-
 
 .bt3 {
 	background-color: #FFA10D;
 }
 
 .btn-wrapper {
-	margin: 20px 0px;
+text-align: center;
+margin: 25px;
 }
 
 .texto-area {
@@ -32,7 +30,4 @@ text-align: center;
 	background-color: #fff;
 }
 
-.btn-wrappert {
-	background-color: #ccc;
-}
 
