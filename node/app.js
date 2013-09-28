@@ -3,13 +3,13 @@ var express = require('express'),
     path = require('path');
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require("firebase-token-generator");
-var tokenGenerator = new FirebaseTokenGenerator('fRVy2CxoB5J7iMCNioKDIZZD5DdBkc0ryhDyqkMT');
+var tokenGenerator = new FirebaseTokenGenerator('dsJTAxmpySfAdrJ71afvyergSWG0LTuIDNx0ZREQ');
 var token = tokenGenerator.createToken({admin: true});
 var dataRef = new Firebase("https://taiapp.firebaseio.com/");
 
 var app = express();
 app.configure(function(){
-  app.set('port', process.env.PORT || 7000);
+  app.set('port', process.env.PORT || 4000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.favicon());
@@ -22,31 +22,17 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res){
-  dataRef.auth(token, function(error) {
-    if(error) {
-      console.log("Login Failed!", error);
-    } else {
-      var childRef = dataRef.child('users');
-      //childRef.set(JSON.parse(req.param('somedata')));
-      console.log("Login Succeeded!");
-      console.log(req.param('somedata'));
-    }
-  });
-  res.render('index', {
-    title: "EJS example",
-    header: "Some users"
-  });
-});
+  res.render('index', { title: 'Express' });
+})
 
 app.get('/logget', function(req, res){
   dataRef.auth(token, function(error) {
     if(error) {
       console.log("Login Failed!", error);
     } else {
-      var childRef = dataRef.child(req.param('nombre'));
+      var childRef = dataRef.child(req.param('color'));
       childRef.push({color:req.param('color'), lat:req.param('lat'), lon:req.param('lon')})
       //childRef.set(JSON.parse(req.param('somedata')));
-      console.log(req.param('total'));
     }
   });
   res.header('Content-Type', 'application/json');
@@ -60,6 +46,6 @@ app.get('/', function(req, res){
 })
 
 
-app.listen(7000);
-console.log('Listening on port 7000');
+app.listen(4000);
+console.log('Listening on port 4000');
 

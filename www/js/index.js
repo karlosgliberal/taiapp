@@ -31,7 +31,6 @@ var app = {
     dondeEstoy: function(punto){
       app.estoyID = navigator.geolocation.watchPosition(onSuccess, app.onError, { enableHighAccuracy: true });
       function onSuccess(position) {
-        alert(position.coords.accuracy);
         if(position.coords.accuracy < 50){
           navigator.geolocation.clearWatch(app.estoyID);
         }
