@@ -32,6 +32,7 @@ var app = {
       app.estoyID = navigator.geolocation.watchPosition(onSuccess, app.onError, { enableHighAccuracy: true });
       function onSuccess(position) {
         if(position.coords.accuracy < 50){
+          app.enviarServidor(position);
           navigator.geolocation.clearWatch(app.estoyID);
         }
       };
@@ -42,14 +43,12 @@ var app = {
     },
 
     enviarServidor: function(position){
-      //data: "lat="+position.coords.latitude+"&lon="+position.coords.latitude+"&total="+total,  
-      //data: "somedata= lat: "+position.coords.latitude+" log: "+position.coords.longitude,
       var color = 'rojo';                      
       $.ajax({
           dataType: 'jsonp',
           data: "lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&total="+total+"&color="+colr,
           jsonp: 'callback',
-          url: 'http://localhost:7000/logget?callback=?',                     
+          url: 'http://192.168.1.61:7000/logget?callback=?',                     
           success: function(data) {
             console.log(data.more);
           }

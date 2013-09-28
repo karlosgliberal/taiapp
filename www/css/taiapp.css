@@ -1,6 +1,5 @@
-
-.bt1, .bt2, .bt3, .texto-area {
-	margin: 0 auto;
+body {
+	background-color: #fff;
 }
 
 .bt1 {
@@ -30,4 +29,11 @@ text-align: center;
 	background-color: #fff;
 }
 
+legend {
+	text-align: center;
+}
 
+#motivo {
+	width: 250px;
+	height: 150px;
+}
