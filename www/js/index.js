@@ -27,12 +27,12 @@ var app = {
       document.addEventListener('deviceready', this.onDeviceReady, false);
     },
 
-   onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-        $('#rojo').click(function(){
-          app.dondeEstoy();
-          alert('rojo');
-        });
+    onDeviceReady: function() {
+      alert('alert'); 
+      app.receivedEvent('deviceready');
+      $('#rojo').click(function(){
+        app.dondeEstoy();
+      });
     },
 
     dondeEstoy: function(punto){
@@ -53,7 +53,7 @@ var app = {
       var color = 'rojo';                      
       $.ajax({
           dataType: 'jsonp',
-          data: "lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&total="+total+"&color="+colr,
+          data: "lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&color="+color,
           jsonp: 'callback',
           url: 'http://192.168.1.61:4000/logget?callback=?',                     
           success: function(data) {
@@ -66,13 +66,6 @@ var app = {
 
     //TODO quitar mas adelante
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+      console.log('Received Event: ' + id);
     }
 };
