@@ -20,19 +20,27 @@
 var dataRef = new Firebase("https://taiapp.firebaseio.com/datos");
     var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
     .setView([43.2694155, -2.9613963], 16);
-  dataRef.on('value', function(snapshot) {
-      var marker = [];
-      var datos = snapshot.val();
-      for( var dat in datos){
-          marker = L.marker(new L.LatLng(datos[dat].lat, datos[dat].lon), {
-            icon: L.mapbox.marker.icon({'marker-color': datos[dat].color}),
-            draggable: true
-        });
-        marker.bindPopup('numero');
-        marker.addTo(map);
+    dataRef.on('child_added', function(snapshot) {
+      var datos = snapshot;
+      marker = L.marker(new L.LatLng(datos.val().lat, datos.val().lon), {
+        icon: L.mapbox.marker.icon({'marker-color': datos.val().color}),
+        draggable: true
+      });
+      marker.bindPopup('numero');
+      marker.addTo(map);
 
-            console.log(datos[dat].color);
-      }
+      // var marker = [];
+      // var datos = snapshot.val();
+      // for( var dat in datos){
+      //     marker = L.marker(new L.LatLng(datos[dat].lat, datos[dat].lon), {
+      //       icon: L.mapbox.marker.icon({'marker-color': datos[dat].color}),
+      //       draggable: true
+      //   });
+      //   marker.bindPopup('numero');
+      //   marker.addTo(map);
+
+      //       console.log(datos[dat].color);
+      // }
 });
 </script>
 </body>
